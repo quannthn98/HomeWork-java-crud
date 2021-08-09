@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
-public class homeWork {
+public class AddPrice {
 
     public static String[] list;
+    public static int[] price;
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         boolean flag = true;
-        list = inputListElement(list);
-
+        inputListElement();
         while (flag) {
             showList();
             nextActinies();
@@ -16,29 +16,34 @@ public class homeWork {
         }
     }
 
-    public static String[] inputListElement(String[] arr){
+    public static void inputListElement(){
         System.out.println("Input list Size");
         int size = sc.nextInt();
         while(size < 0 ){
             System.out.println("please input valid size (size>0)");
             sc.nextInt();
         }
-        arr = new String[size];
-        for (int i = 0; i < arr.length; i++) {
+
+        list = new String[size];
+        price = new int[size];
+
+        for (int i = 0; i < size; i++) {
             System.out.println("Input elment at " + i + " position");
-            arr[i] = sc.next();
+            list[i] = sc.next();
+            System.out.println("input price of " + list[i] + " (in $)");
+            price[i] = sc.nextInt();
         }
-        System.out.println("Input");
-        return arr;
+
+
     }
 
     public static void showList() {
         System.out.println("-----------------------------");
         System.out.println("Here are the product list");
         System.out.println("-----------------------------");
-        System.out.println("Id Name");
+        System.out.println("Id Name    Price($)");
         for (int i = 0; i < list.length; i++) {
-            System.out.println(i + ". " + list[i]);
+            System.out.println(i + ". " + list[i] + "    $" + price[i]);
         }
     }
 
@@ -66,8 +71,10 @@ public class homeWork {
             case 1:
                 System.out.println("Input your new product name");
                 String productName = sc.next();
+                System.out.println("Input price");
+                int price = sc.nextInt();
 
-                list = addNewProduct(productName);
+                list = addNewProduct(productName, price);
                 break;
 
             case 2:
@@ -106,13 +113,19 @@ public class homeWork {
         }
     }
 
-    public static String[] addNewProduct(String productName) {
+    public static String[] addNewProduct(String productName, int productPrice) {
         String[] temp = list;
+        int[] temp2;
 
         if (confirm()) {
             temp = new String[list.length + 1];
             temp[temp.length - 1] = productName;
             System.arraycopy(list, 0, temp, 0, list.length);
+
+            temp2 = new int[price.length + 1];
+            price[temp.length - 1] = productPrice;
+            System.arraycopy(price, 0 , temp2, 0 , price.length);
+
             System.out.println("Add new product successfully");
         } else {
             System.out.println("Add new product canceled");
